@@ -259,6 +259,8 @@ auth:
     proxy: "proxy-admin"
     # pulsar-admin client to broker/proxy communication
     client: "admin"
+    # pulsar-manager to broker communication. If left empty, no jwt setup will be performed in the manager
+    manager: ""
 
 ######################################################################
 # External dependencies
@@ -1105,8 +1107,14 @@ pulsar_manager:
   configData:
     REDIRECT_HOST: "http://127.0.0.1"
     REDIRECT_PORT: "9527"
+    ## DRIVER_CLASS_NAME, URL, USERNAME, and PASSWORD set the datasource connection parameters, the values
+    ## of which have been effectively hardcoded by the container's startup procedure. Changing them
+    ## will probably break pulsar manager, unless you've also customized the image, database, and/or
+    ## database init script.
     DRIVER_CLASS_NAME: org.postgresql.Driver
     URL: jdbc:postgresql://127.0.0.1:5432/pulsar_manager
+    USERNAME: pulsar
+    PASSWORD: pulsar
     LOG_LEVEL: DEBUG
     ## If you enabled authentication support
     ## JWT_TOKEN: <token>
@@ -1137,5 +1145,6 @@ pulsar_manager:
   ## If set use existing secret with specified name to set pulsar admin credentials.
   existingSecretName:
   admin:
+    autoCreateAccount: true
     user: pulsar
     password: pulsar
