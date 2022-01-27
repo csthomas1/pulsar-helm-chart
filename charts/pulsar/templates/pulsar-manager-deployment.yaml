@@ -100,7 +100,7 @@ spec:
         {{- end }}
         {{- end }}          
         {{- include "pulsar.imagePullSecrets" . | nindent 6}}
-      {{- if .Values.pulsar_manager.admin.autoCreateAccount }}
+      {{- if .Values.pulsar_manager.autoCreateAdminAccount }}
         - args:
           - |
             until curl http://localhost:7750/pulsar-manager; do

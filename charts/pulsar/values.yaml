@@ -1142,9 +1142,12 @@ pulsar_manager:
     hostname: ""
     path: "/"
 
+  ## If true, automatically create a Pulsar Manager user account for the admin when the container starts.
+  ## The account's username/password will be set to the values in the configured admin secret. 
+  autoCreateAdminAccount: true
+
   ## If set use existing secret with specified name to set pulsar admin credentials.
   existingSecretName:
   admin:
-    autoCreateAccount: true
     user: pulsar
     password: pulsar
