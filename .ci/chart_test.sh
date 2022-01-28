@@ -39,12 +39,12 @@ if [[ "x${SYMMETRIC}" == "xtrue" ]]; then
     extra_opts="-s"
 fi
 
-if [[ "${EXTRA_SUPERUSERS}" != "" ]]; then
-    extra_opts="${extra_opts} --superusers proxy-admin,broker-admin,admin,${EXTRA_SUPERUSERS}"
+if [[ "x${EXTRA_SUPERUSERS}" != "x" ]]; then
+    extra_opts="${extra_opts} --pulsar-superusers proxy-admin,broker-admin,admin,${EXTRA_SUPERUSERS}"
 fi
 
 # install pulsar chart
-ci::install_pulsar_chart ${PULSAR_HOME}/${VALUES_FILE} ${extra_opts}
+ci::install_pulsar_chart ${PULSAR_HOME}/${VALUES_FILE}
 
 # test producer
 ci::test_pulsar_producer

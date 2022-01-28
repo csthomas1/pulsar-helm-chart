@@ -101,7 +101,6 @@ function ci::collect_k8s_logs() {
 
 function ci::install_pulsar_chart() {
     local value_file=$1
-    local extra_opts=$2
 
     echo "Installing the pulsar chart"
     ${KUBECTL} create namespace ${NAMESPACE}
@@ -215,7 +214,18 @@ function ci::test_pulsar_function() {
 
 function ci::test_pulsar_manager() {
     # Get a CSRF token
-    # Try login with pulsar/pulsar (default admin account)
+    local manager_base_url="http://${CLUSTER}-pulsar-manager:9527/pulsar-manager"
+    local toolset_exec="${KUBECTL} exec -n ${NAMESPACE} ${CLUSTER}-toolset-0 --"
+    local csrf_token=$(${toolset_exec} curl ${manager_base_url}/csrf-token)
+
+    # Attempt login
+    ${toolset_exec} curl -i -c /tmp/cookies --dump-header /tmp/headers -H "X-XSRF-TOKEN: ${csrf_token}" -X POST ${manager_base_url}/login -d "{\"username\":\"pulsar\",\"password\":\"pulsar\"}"
+
+    local admin_token=$(${toolset_exec} grep "token:" /tmp/headers | cut -b 8-)
+    local curl_params="-b /tmp/cookies -c /tmp/cookies -H \"token: ${admin_token}\" -H \"username: pulsar\" -H \"Admin-Token: $admin_token\" -H \"tenant: pulsar\" -H \"environment: pulsar\""
     # Create Pulsar cluster, then try to access a url beneath it. Success indicates that the manager was able to successfully retrieve information
     # from the brokers
+    ${toolset_exec} curl ${curl_params} -X PUT ${manager_base_url}/environments/environment -d "{\"name\":\"pulsar\",\"broker\":\"https://pulsar-broker:8443\"}"
+
+    ${toolset_exec} curl ${curl_params} ${manager_base_url}/admin/v2/tenants | grep -o '"tenant":"public"'
 }
