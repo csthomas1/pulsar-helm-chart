@@ -212,3 +212,10 @@ function ci::test_pulsar_function() {
     # ${KUBECTL} exec -n ${NAMESPACE} ${CLUSTER}-toolset-0 -- bin/pulsar-client produce -m "hello pulsar function!" pulsar-ci/test/test_input
     # ci::wait_message_processed
 }
+
+function ci::test_pulsar_manager() {
+    # Get a CSRF token
+    # Try login with pulsar/pulsar (default admin account)
+    # Create Pulsar cluster, then try to access a url beneath it. Success indicates that the manager was able to successfully retrieve information
+    # from the brokers
+}

@@ -49,6 +49,7 @@ jobs:
           .ci/chart_test.sh .ci/clusters/values-jwt-asymmetric.yaml
         env:
           SYMMETRIC: "false"
+          EXTRA_SUPERUSERS: "manager-admin"
         # Only build a kind cluster if there are chart changes to test.
         if: ${{ steps.check_changes.outputs.docs_only != 'true' }}
 

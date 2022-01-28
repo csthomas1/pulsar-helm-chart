@@ -31,7 +31,7 @@ affinity:
 # disable auto recovery and pulsar manager
 components:
   autorecovery: false
-  pulsar_manager: false
+  pulsar_manager: true
 
 zookeeper:
   replicaCount: 1
@@ -79,3 +79,5 @@ auth:
     proxy: "proxy-admin"
     # pulsar-admin client to broker/proxy communication
     client: "admin"
+    # pulsar manager to broker
+    manager: "manager-admin"
