@@ -17,7 +17,7 @@
 # under the License.
 #
 
-name: Precommit - Pulsar Helm Chart (JWT Secret Key Installation)
+name: Precommit - Pulsar Helm Chart (JWT Public/Private Key Installation)
 on:
   pull_request:
     branches:
