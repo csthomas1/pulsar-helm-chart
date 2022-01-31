@@ -28,7 +28,7 @@ monitoring:
 affinity:
   anti_affinity: false
 
-# disable auto recovery and pulsar manager
+# disable auto recovery. enable pulsar manager for jwt connectivity testing
 components:
   autorecovery: false
   pulsar_manager: true

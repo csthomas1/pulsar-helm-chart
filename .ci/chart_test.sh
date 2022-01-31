@@ -44,7 +44,7 @@ if [[ "x${EXTRA_SUPERUSERS}" != "x" ]]; then
 fi
 
 # install pulsar chart
-ci::install_pulsar_chart ${PULSAR_HOME}/${VALUES_FILE}
+ci::install_pulsar_chart ${PULSAR_HOME}/${VALUES_FILE} ${extra_opts}
 
 # test producer
 ci::test_pulsar_producer
@@ -55,7 +55,7 @@ if [[ "x${FUNCTION}" == "xtrue" ]]; then
 fi
 
 if [[ "x${MANAGER}" == "xtrue" ]]; then
-    ci:test_pulsar_manager
+    ci::test_pulsar_manager ${TLS}
 fi
 
 # delete the cluster
